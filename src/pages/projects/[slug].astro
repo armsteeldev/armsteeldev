@@ -1,0 +1,83 @@
+---
+import { getCollection, render } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { title, description, category, year, image, imageAlt, images, links, githubUrl, technicalDetails } = project.data;
+const projectLinks = [...links, ...(githubUrl ? [{ label: 'GitHub repository', url: githubUrl }] : [])];
+---
+
+<SiteLayout title={`${title} — Armsteel`} description={description}>
+  <article class="project-detail">
+    <header class="project-detail__intro">
+      <div class="container project-detail__intro-inner">
+        <a class="back-link" href="/projects/"><span aria-hidden="true">←</span> All projects</a>
+        <p class="eyebrow">{category}</p>
+        <h1>{title}</h1>
+        <p class="project-detail__summary">{description}</p>
+        {year && <p class="project-detail__year">{year}</p>}
+      </div>
+    </header>
+
+    <div class="container project-detail__body">
+      {image ? (
+        <figure class="project-detail__image">
+          <img src={image} alt={imageAlt ?? `${title} project image`} />
+        </figure>
+      ) : (
+        <div class:list={["project-visual project-visual--detail", `project-visual--${project.id}`]} role="img" aria-label={`Abstract placeholder illustration for ${title}; no project image has been supplied.`}>
+          <span class="project-visual__meta">Armsteel / project image not supplied</span>
+          <span class="project-visual__mark" aria-hidden="true">{String(project.data.order).padStart(2, '0')}</span>
+          <span class="project-visual__geometry" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="project-visual__placeholder">Abstract preview / image to come</span>
+        </div>
+      )}
+      {images.length > 0 && (
+        <div class="project-gallery" aria-label={`${title} images`}>
+          {images.map((photo) => (
+            <figure>
+              <img src={photo.src} alt={photo.alt} loading="lazy" />
+              {photo.caption && <figcaption>{photo.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      )}
+      <div class="project-detail__text prose"><Content /></div>
+      {(technicalDetails.length > 0 || projectLinks.length > 0) && (
+        <div class="project-detail__extras">
+          {technicalDetails.length > 0 && (
+            <section aria-labelledby="technical-notes-title">
+              <h2 id="technical-notes-title">Technical notes</h2>
+              <dl>
+                {technicalDetails.map((detail) => <div><dt>{detail.label}</dt><dd>{detail.value}</dd></div>)}
+              </dl>
+            </section>
+          )}
+          {projectLinks.length > 0 && (
+            <nav aria-labelledby="project-links-title">
+              <h2 id="project-links-title">Links</h2>
+              <ul>
+                {projectLinks.map((link) => (
+                  <li><a href={link.url} target="_blank" rel="noreferrer">{link.label}<span aria-hidden="true">↗</span></a></li>
+                ))}
+              </ul>
+            </nav>
+          )}
+        </div>
+      )}
+      <div class="project-detail__end">
+        <span class="eyebrow">A project in the Armsteel archive</span>
+        <a class="text-link" href="/projects/">Explore all projects <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </article>
+</SiteLayout>

@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '../../components/ProjectCard.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const categories = [...new Set(projects.map((project) => project.data.category))].sort((a, b) => a.localeCompare(b));
+---
+
+<SiteLayout title="Projects — Armsteel" description="A growing archive of software, electronics, and experiments made by Charlie Arnerstål.">
+  <section class="page-intro">
+    <div class="container page-intro__inner">
+      <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> The open archive</p>
+      <h1>Things I’ve made.</h1>
+      <p>A growing collection of projects, experiments, tools, and other curiosities. Some are more finished than others.</p>
+      <span class="page-intro__index" aria-hidden="true">01 / {String(projects.length).padStart(2, '0')}</span>
+    </div>
+  </section>
+
+  <section class="section archive-section" id="work-list" aria-labelledby="archive-title">
+    <div class="container">
+      <div class="archive-heading">
+        <div>
+          <p class="eyebrow">Browse by kind</p>
+          <h2 id="archive-title">Project archive</h2>
+        </div>
+        <p class="archive-count">{projects.length} {projects.length === 1 ? 'project' : 'projects'}</p>
+      </div>
+
+      <div class="archive-filters" role="group" aria-label="Filter projects by category">
+        <button class="filter-button" type="button" data-filter="all" aria-pressed="true">Everything <span>{projects.length}</span></button>
+        {categories.map((category) => (
+          <button class="filter-button" type="button" data-filter={category.toLowerCase()} aria-pressed="false">
+            {category} <span>{projects.filter((project) => project.data.category === category).length}</span>
+          </button>
+        ))}
+      </div>
+
+      <p class="filter-status" aria-live="polite">Showing all {projects.length} projects</p>
+      <div class="project-grid archive-grid">
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+      <p class="archive-empty" hidden>No projects in this category yet.</p>
+    </div>
+  </section>
+
+  <script>
+    const buttons = [...document.querySelectorAll<HTMLButtonElement>('.filter-button')];
+    const cards = [...document.querySelectorAll<HTMLElement>('.archive-grid .project-card')];
+    const status = document.querySelector<HTMLElement>('.filter-status');
+    const emptyMessage = document.querySelector<HTMLElement>('.archive-empty');
+
+    function applyFilter(filter: string) {
+      const activeButton = buttons.find((button) => button.dataset.filter === filter);
+      if (!activeButton) return;
+
+      for (const button of buttons) {
+        button.setAttribute('aria-pressed', String(button === activeButton));
+      }
+
+      let visible = 0;
+      for (const card of cards) {
+        const matches = filter === 'all' || card.dataset.category === filter;
+        card.hidden = !matches;
+        if (matches) visible += 1;
+      }
+
+      if (status) {
+        const category = activeButton.dataset.filter === 'all' ? '' : ` in ${activeButton.childNodes[0]?.textContent?.trim()}`;
+        status.textContent = `Showing ${visible} ${visible === 1 ? 'project' : 'projects'}${category}`;
+      }
+      if (emptyMessage) emptyMessage.hidden = visible !== 0;
+    }
+
+    for (const button of buttons) {
+      button.addEventListener('click', () => applyFilter(button.dataset.filter ?? 'all'));
+    }
+
+    const requestedCategory = new URLSearchParams(window.location.search).get('category')?.toLowerCase();
+    if (requestedCategory && buttons.some((button) => button.dataset.filter === requestedCategory)) {
+      applyFilter(requestedCategory);
+    }
+  </script>
+</SiteLayout>

@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, description, category, order, image, imageAlt } = project.data;
+const slug = project.id;
+const number = String(order).padStart(2, '0');
+const projectUrl = `/projects/${slug}/`;
+---
+
+<article class="project-card" data-category={category.toLowerCase()}>
+  <a class="project-card__visual-link" href={projectUrl} aria-label={`View ${title}`}>
+    {image ? (
+      <div class="project-visual project-visual--image">
+        <img src={image} alt={imageAlt ?? `${title} project preview`} loading="lazy" />
+      </div>
+    ) : (
+      <div class:list={["project-visual", `project-visual--${slug}`]} role="img" aria-label={`Abstract placeholder illustration for ${title}; no project image has been supplied.`}>
+        <span class="project-visual__meta">Armsteel / {number}</span>
+        <span class="project-visual__mark" aria-hidden="true">{number}</span>
+        <span class="project-visual__geometry" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="project-visual__placeholder">Abstract preview / image to come</span>
+      </div>
+    )}
+  </a>
+
+  <div class="project-card__content">
+    <div class="project-card__copy">
+      <p class="eyebrow">{category}</p>
+      <h3><a href={projectUrl}>{title}</a></h3>
+      <p>{description}</p>
+    </div>
+    <a class="text-link project-card__link" href={projectUrl}>
+      View project <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+</article>

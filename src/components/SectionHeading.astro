@@ -1,0 +1,27 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  linkHref?: string;
+  linkLabel?: string;
+}
+
+const { eyebrow, title, linkHref, linkLabel } = Astro.props;
+const headingId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+---
+
+<div class="section-heading">
+  <div class="section-heading__title">
+    <span class="section-heading__shape" aria-hidden="true"></span>
+    <div>
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 id={headingId}>{title}</h2>
+    </div>
+  </div>
+  <span class="section-heading__rule" aria-hidden="true"></span>
+  {linkHref && linkLabel && (
+    <a class="text-link section-heading__link" href={linkHref}>
+      {linkLabel}<span class="arrow" aria-hidden="true">→</span>
+    </a>
+  )}
+</div>

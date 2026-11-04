@@ -1,0 +1,39 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+
+<SiteLayout title="About — Armsteel" description="About Charlie Arnerstål and Armsteel, a personal home for things made out of curiosity.">
+  <article class="about-page">
+    <header class="page-intro about-page__intro">
+      <div class="container page-intro__inner">
+        <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> A little context</p>
+        <h1>Hi, I’m Charlie.</h1>
+        <p>I make software, experiment with electronics, and follow ideas across different technical disciplines.</p>
+        <span class="page-intro__index" aria-hidden="true">ABOUT / ARMSTEEL</span>
+      </div>
+    </header>
+
+    <div class="container about-page__content">
+      <section class="about-page__statement">
+        <p class="eyebrow">What is Armsteel?</p>
+        <div>
+          <h2>A personal name for the things I make.</h2>
+          <p>Armsteel is my creative identity — a place to collect and share projects that might otherwise have little in common. It isn’t a company or a product. It’s a home for practical tools, experiments, and curious side quests.</p>
+        </div>
+      </section>
+
+      <section class="about-page__statement">
+        <p class="eyebrow">What belongs here?</p>
+        <div>
+          <h2>Whatever I’m curious about.</h2>
+          <p>Some projects are software. Others involve electronics, hardware, or a small idea worth trying. They can be polished, unfinished, useful, or simply interesting to make.</p>
+        </div>
+      </section>
+
+      <div class="about-page__end">
+        <p class="eyebrow">Take a look around</p>
+        <a class="button button--filled" href="/projects/">Browse the projects <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </article>
+</SiteLayout>

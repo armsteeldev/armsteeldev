@@ -1,0 +1,16 @@
+{
+  "name": "Armsteel",
+  "short_name": "Armsteel",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#e5e3df",
+  "theme_color": "#e5e3df",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
