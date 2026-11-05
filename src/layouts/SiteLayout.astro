@@ -6,14 +6,36 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  indexable?: boolean;
 }
 
 const {
   title = 'Armsteel — Charlie Arnerstål',
   description = 'The personal website of Charlie Arnerstål. Software, systems, electronics, and technical projects.',
+  indexable = true,
 } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const canonical = indexable ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
 const socialImage = new URL('/armsteel-charlie-og-v1.png', Astro.site).toString();
+const structuredData = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': 'https://armsteel.dev/about/#charlie',
+      name: 'Charlie Arnerstål',
+      url: 'https://armsteel.dev/about/',
+      sameAs: ['https://github.com/Charlemagne404'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://armsteel.dev/#website',
+      url: 'https://armsteel.dev/',
+      name: 'Armsteel',
+      description: 'The personal portfolio of Charlie Arnerstål.',
+      publisher: { '@id': 'https://armsteel.dev/about/#charlie' },
+    },
+  ],
+}).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
@@ -23,7 +45,8 @@ const socialImage = new URL('/armsteel-charlie-og-v1.png', Astro.site).toString(
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#e7e5e0" />
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {!indexable && <meta name="robots" content="noindex,follow" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="/favicon-16.png" sizes="16x16" />
@@ -33,7 +56,7 @@ const socialImage = new URL('/armsteel-charlie-og-v1.png', Astro.site).toString(
     <meta property="og:site_name" content="Armsteel" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={socialImage} />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
@@ -44,6 +67,7 @@ const socialImage = new URL('/armsteel-charlie-og-v1.png', Astro.site).toString(
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
     <meta name="twitter:image:alt" content="Armsteel and Charlie Arnerstål with the geometric Armsteel mark." />
+    {indexable && <script type="application/ld+json" set:html={structuredData}></script>}
     <title>{title}</title>
   </head>
   <body>

@@ -1,0 +1,42 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const contactEmail = 'armsteeldev@outlook.com';
+---
+
+<SiteLayout title="Privacy — Armsteel" description="How the Armsteel personal portfolio handles information when you visit or contact Charlie Arnerstål.">
+  <article class="privacy-page">
+    <header class="page-intro privacy-page__intro">
+      <div class="container page-intro__inner">
+        <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> Privacy</p>
+        <h1>Privacy and data.</h1>
+        <p>Armsteel is Charlie Arnerstål’s personal portfolio. This page describes the data flows used by the site.</p>
+      </div>
+    </header>
+
+    <div class="container privacy-page__content">
+      <div class="privacy-page__prose prose">
+        <section aria-labelledby="privacy-site-title">
+          <h2 id="privacy-site-title">The website</h2>
+          <p>The site is a static portfolio hosted by GitHub Pages. It has no analytics, advertising, social embeds, or site-side browser storage. The production pages reviewed set no cookies, and the site code does not use cookies, local storage, or session storage. No consent banner is used because the site does not use non-essential cookies or similar tracking.</p>
+        </section>
+
+        <section aria-labelledby="privacy-hosting-title">
+          <h2 id="privacy-hosting-title">Hosting</h2>
+          <p>When you visit, your browser sends a request to GitHub Pages so it can deliver the site. GitHub’s privacy statement describes technical and usage information it may process, including IP address and request details. GitHub operates the hosting service and its logs; I do not receive or control those logs or their retention. Read <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub’s privacy statement</a> for information about its handling.</p>
+        </section>
+
+        <section aria-labelledby="privacy-email-title">
+          <h2 id="privacy-email-title">Email</h2>
+          <p>The contact link opens your configured email application; it does not send a message to this website. If you email me at <a href={`mailto:${contactEmail}`}>{contactEmail}</a>, I receive your email address and the information you choose to include so I can read and respond to your message. Email is handled by the service used for that mailbox, under that service’s own privacy terms.</p>
+        </section>
+
+        <section aria-labelledby="privacy-links-title">
+          <h2 id="privacy-links-title">External links and questions</h2>
+          <p>This site links to GitHub and project websites. Those sites apply their own privacy practices when you choose to visit them; their content is not embedded on Armsteel pages.</p>
+          <p>For a question about this page or information you sent by email, contact Charlie at <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>
+        </section>
+      </div>
+    </div>
+  </article>
+</SiteLayout>

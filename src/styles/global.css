@@ -5,8 +5,8 @@
   --paper-shadow: #d9d6d0;
   --ink: #262523;
   --ink-soft: #514e49;
-  --muted: #716c65;
-  --taupe: #8c7866;
+  --muted: #625d56;
+  --taupe: #705b49;
   --line: #c4c0b8;
   --line-strong: #858078;
   --beam: #373633;
@@ -1029,6 +1029,10 @@ svg {
   color: var(--paper-bright);
 }
 
+.site-footer :focus-visible {
+  outline-color: var(--paper-bright);
+}
+
 .site-footer__top {
   display: grid;
   min-height: 71px;
@@ -1513,6 +1517,36 @@ svg {
     width: 100%;
     text-align: left;
   }
+}
+
+.privacy-page__content {
+  padding-block: clamp(48px, 7vw, 86px) var(--space-section);
+}
+
+.privacy-page__prose {
+  margin: 0 auto;
+}
+
+.privacy-page__prose section + section {
+  margin-top: clamp(28px, 4vw, 46px);
+}
+
+.privacy-page__prose h2 {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+
+.privacy-page__prose p + p {
+  margin-top: 12px;
+}
+
+.privacy-page__prose a {
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
