@@ -7,13 +7,13 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
 const categories = [...new Set(projects.map((project) => project.data.category))].sort((a, b) => a.localeCompare(b));
 ---
 
-<SiteLayout title="Projects — Armsteel" description="A growing archive of software, electronics, and experiments made by Charlie Arnerstål.">
-  <section class="page-intro">
+<SiteLayout title="Projects — Armsteel" description="Software, systems, and experiments made by Charlie Arnerstål.">
+  <section class="page-intro archive-intro">
     <div class="container page-intro__inner">
-      <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> The open archive</p>
-      <h1>Things I’ve made.</h1>
-      <p>A growing collection of projects, experiments, tools, and other curiosities. Some are more finished than others.</p>
-      <span class="page-intro__index" aria-hidden="true">01 / {String(projects.length).padStart(2, '0')}</span>
+      <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> Projects</p>
+      <h1>Projects, large and small.</h1>
+      <p>Browse platforms, services, and experiments. Each project has room for the details that make it distinct.</p>
+      <span class="page-intro__index" aria-hidden="true">{projects.length} PROJECTS</span>
     </div>
   </section>
 
@@ -21,26 +21,28 @@ const categories = [...new Set(projects.map((project) => project.data.category))
     <div class="container">
       <div class="archive-heading">
         <div>
-          <p class="eyebrow">Browse by kind</p>
-          <h2 id="archive-title">Project archive</h2>
+          <p class="eyebrow">Browse by category</p>
+          <h2 id="archive-title">The archive</h2>
         </div>
         <p class="archive-count">{projects.length} {projects.length === 1 ? 'project' : 'projects'}</p>
       </div>
 
       <div class="archive-filters" role="group" aria-label="Filter projects by category">
-        <button class="filter-button" type="button" data-filter="all" aria-pressed="true">Everything <span>{projects.length}</span></button>
+        <button class="filter-button" type="button" data-filter="all" aria-pressed="true" aria-controls="project-archive-grid">
+          All projects <span>{projects.length}</span>
+        </button>
         {categories.map((category) => (
-          <button class="filter-button" type="button" data-filter={category.toLowerCase()} aria-pressed="false">
+          <button class="filter-button" type="button" data-filter={category.toLowerCase()} aria-pressed="false" aria-controls="project-archive-grid">
             {category} <span>{projects.filter((project) => project.data.category === category).length}</span>
           </button>
         ))}
       </div>
 
-      <p class="filter-status" aria-live="polite">Showing all {projects.length} projects</p>
-      <div class="project-grid archive-grid">
+      <p class="filter-status" role="status" aria-live="polite">Showing all {projects.length} projects</p>
+      <div class="project-grid archive-grid" id="project-archive-grid">
         {projects.map((project) => <ProjectCard project={project} />)}
       </div>
-      <p class="archive-empty" hidden>No projects in this category yet.</p>
+      <p class="archive-empty" hidden>No projects match this category yet.</p>
     </div>
   </section>
 
@@ -66,7 +68,7 @@ const categories = [...new Set(projects.map((project) => project.data.category))
       }
 
       if (status) {
-        const category = activeButton.dataset.filter === 'all' ? '' : ` in ${activeButton.childNodes[0]?.textContent?.trim()}`;
+        const category = filter === 'all' ? '' : ` in ${activeButton.childNodes[0]?.textContent?.trim()}`;
         status.textContent = `Showing ${visible} ${visible === 1 ? 'project' : 'projects'}${category}`;
       }
       if (emptyMessage) emptyMessage.hidden = visible !== 0;

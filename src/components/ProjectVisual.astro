@@ -1,0 +1,106 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  variant?: 'card' | 'detail';
+}
+
+const { project, variant = 'card' } = Astro.props;
+const { title, category, order, image, imageAlt } = project.data;
+const index = String(order).padStart(2, '0');
+
+const visualDetails: Record<string, { label: string; aria: string }> = {
+  continental: { label: 'Connected systems', aria: 'Interconnected services and infrastructure' },
+  'echo-archives': { label: 'Audio archive', aria: 'Sound waves and acoustic forms' },
+  'dk-booking': { label: 'Event schedule', aria: 'A structured calendar and time grid' },
+  midas: { label: 'Market research', aria: 'An analytical curve over a probability grid' },
+};
+
+const detail = visualDetails[project.id] ?? { label: category, aria: `${category} project illustration` };
+const baseClass = variant === 'detail' ? 'project-visual project-visual--detail' : 'project-visual';
+---
+
+<div
+  class:list={[baseClass, `project-visual--${project.id}`]}
+  role="img"
+  aria-label={image ? imageAlt ?? `${title} project image` : `${title}: ${detail.aria}.`}
+>
+  {image ? (
+    <img src={image} alt="" loading={variant === 'card' ? 'lazy' : 'eager'} />
+  ) : (
+    <svg class="project-visual__art" viewBox="0 0 840 480" aria-hidden="true" focusable="false">
+      <defs>
+        <pattern id={`visual-grid-${project.id}`} width="42" height="42" patternUnits="userSpaceOnUse">
+          <path d="M42 0H0V42" fill="none" stroke="var(--visual-grid)" stroke-width="1" />
+        </pattern>
+      </defs>
+      <rect width="840" height="480" fill="var(--visual-bg)" />
+      <rect width="840" height="480" fill={`url(#visual-grid-${project.id})`} />
+
+      {project.id === 'continental' && (
+        <g class="visual-network" fill="none" stroke="var(--visual-ink)" stroke-width="2">
+          <path d="M420 240H286V154H188M286 154V104H412M420 240H554V134H655M554 134H698M420 240H286V326H170M286 326V382H399M420 240H566V328H690M566 328H724" />
+          <path d="M412 104V154H655M399 382V326H690" stroke="var(--visual-accent)" stroke-width="1.5" />
+          <rect x="355" y="188" width="130" height="104" fill="var(--visual-accent)" stroke="var(--visual-accent)" />
+          <rect x="158" y="132" width="130" height="44" />
+          <rect x="356" y="82" width="112" height="44" />
+          <rect x="655" y="112" width="76" height="44" />
+          <rect x="142" y="304" width="144" height="44" />
+          <rect x="354" y="360" width="90" height="44" />
+          <rect x="690" y="306" width="70" height="44" />
+          <circle cx="286" cy="154" r="6" fill="var(--visual-ink)" />
+          <circle cx="554" cy="134" r="6" fill="var(--visual-ink)" />
+          <circle cx="286" cy="326" r="6" fill="var(--visual-ink)" />
+          <circle cx="566" cy="328" r="6" fill="var(--visual-ink)" />
+          <circle cx="420" cy="240" r="11" fill="var(--visual-bg)" stroke="var(--visual-bg)" />
+          <path d="M390 240h60M420 210v60" stroke="var(--visual-bg)" stroke-width="1.5" />
+        </g>
+      )}
+
+      {project.id === 'echo-archives' && (
+        <g class="visual-echo" fill="none" stroke="var(--visual-ink)">
+          <path d="M322 128a158 112 0 0 0 0 224M356 152a124 88 0 0 0 0 176M390 177a90 63 0 0 0 0 126" stroke-width="2" />
+          <path d="M518 128a158 112 0 0 1 0 224M484 152a124 88 0 0 1 0 176M450 177a90 63 0 0 1 0 126" stroke-width="2" />
+          <path d="M178 240h122l18-30 22 76 24-118 28 170 24-142 23 96 22-58 20 30h182" stroke="var(--visual-accent)" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" />
+          <circle cx="420" cy="240" r="7" fill="var(--visual-ink)" stroke="none" />
+        </g>
+      )}
+
+      {project.id === 'dk-booking' && (
+        <g class="visual-calendar" fill="none" stroke="var(--visual-ink)" stroke-width="2">
+          <rect x="229" y="100" width="382" height="274" />
+          <path d="M229 164h382M229 234h382M229 304h382M305 164v210M381 164v210M457 164v210M533 164v210" />
+          <path d="M274 83v37M566 83v37" stroke-width="4" />
+          <rect x="321" y="181" width="39" height="34" fill="var(--visual-accent)" stroke="var(--visual-accent)" />
+          <rect x="397" y="251" width="108" height="34" fill="var(--visual-accent)" stroke="var(--visual-accent)" />
+          <rect x="549" y="321" width="39" height="34" fill="var(--visual-accent)" stroke="var(--visual-accent)" />
+          <path d="M169 405h502M210 393v24M294 393v24M378 393v24M462 393v24M546 393v24M630 393v24" stroke-width="1.5" />
+        </g>
+      )}
+
+      {project.id === 'midas' && (
+        <g class="visual-analysis" fill="none" stroke="var(--visual-ink)">
+          <path d="M206 116v252h444" stroke-width="2" />
+          <path d="M206 180h444M206 244h444M206 308h444M294 116v252M382 116v252M470 116v252M558 116v252" stroke="var(--visual-grid-strong)" stroke-width="1" />
+          <path d="M222 326c62 0 88-1 124-12 40-12 56-45 79-105 21-54 35-82 59-82 28 0 44 41 62 87 24 62 47 96 104 110" stroke="var(--visual-accent)" stroke-width="4" />
+          <path d="M222 345c79-2 131-6 177-24 51-20 69-65 102-110 24-33 46-51 70-47 25 4 41 33 57 67" stroke="var(--visual-ink)" stroke-width="2" stroke-dasharray="6 8" opacity="0.75" />
+          <circle cx="425" cy="209" r="7" fill="var(--visual-bg)" stroke="var(--visual-accent)" stroke-width="3" />
+          <circle cx="484" cy="127" r="6" fill="var(--visual-bg)" stroke="var(--visual-accent)" stroke-width="3" />
+          <circle cx="587" cy="214" r="6" fill="var(--visual-bg)" stroke="var(--visual-accent)" stroke-width="3" />
+        </g>
+      )}
+
+      {!visualDetails[project.id] && (
+        <g fill="none" stroke="var(--visual-ink)" stroke-width="2">
+          <rect x="272" y="142" width="296" height="196" />
+          <path d="M272 207h296M272 273h296M370 142v196M469 142v196" />
+          <path d="M224 382h392M256 370v24M356 370v24M456 370v24M556 370v24" stroke-width="1.5" />
+          <rect x="393" y="226" width="54" height="54" fill="var(--visual-accent)" stroke="var(--visual-accent)" />
+        </g>
+      )}
+    </svg>
+  )}
+  <span class="project-visual__index" aria-hidden="true">{index} <span>/</span> {category}</span>
+  {!image && <span class="project-visual__label" aria-hidden="true">{detail.label}</span>}
+</div>

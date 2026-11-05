@@ -1,39 +1,104 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
+
+const technologyGroups = [
+  { label: 'Web', items: ['Astro', 'JavaScript', 'TypeScript', 'CSS'] },
+  { label: 'Services', items: ['Node.js', 'Python'] },
+  { label: 'Data', items: ['SQLite', 'PostgreSQL'] },
+];
 ---
 
-<SiteLayout title="About — Armsteel" description="About Charlie Arnerstål and Armsteel, a personal home for things made out of curiosity.">
+<SiteLayout title="About — Armsteel" description="About Charlie Arnerstål and the personal work collected under Armsteel.">
   <article class="about-page">
     <header class="page-intro about-page__intro">
       <div class="container page-intro__inner">
-        <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> A little context</p>
-        <h1>Hi, I’m Charlie.</h1>
-        <p>I make software, experiment with electronics, and follow ideas across different technical disciplines.</p>
+        <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> About Charlie</p>
+        <h1><span>Hi, I’m Charlie</span><span>Arnerstål.</span></h1>
+        <p>I build software and explore technical ideas, and Armsteel is the personal portfolio where I share that work.</p>
         <span class="page-intro__index" aria-hidden="true">ABOUT / ARMSTEEL</span>
       </div>
     </header>
 
     <div class="container about-page__content">
-      <section class="about-page__statement">
-        <p class="eyebrow">What is Armsteel?</p>
+      <section class="about-page__statement" aria-labelledby="about-armsteel-title">
+        <p class="eyebrow">A personal identity</p>
         <div>
-          <h2>A personal name for the things I make.</h2>
-          <p>Armsteel is my creative identity — a place to collect and share projects that might otherwise have little in common. It isn’t a company or a product. It’s a home for practical tools, experiments, and curious side quests.</p>
+          <h2 id="about-armsteel-title">A place to collect the things I make.</h2>
+          <p>Armsteel is my personal home for software, electronics, and technical projects. It isn’t a company; it gives very different pieces of work one place to live, from complete platforms to small experiments.</p>
         </div>
       </section>
 
-      <section class="about-page__statement">
-        <p class="eyebrow">What belongs here?</p>
-        <div>
-          <h2>Whatever I’m curious about.</h2>
-          <p>Some projects are software. Others involve electronics, hardware, or a small idea worth trying. They can be polished, unfinished, useful, or simply interesting to make.</p>
+      <section class="about-interests" aria-labelledby="about-interests-title">
+        <div class="about-interests__intro">
+          <p class="eyebrow">What I work on</p>
+          <h2 id="about-interests-title">Different kinds of technical work, driven by curiosity.</h2>
+        </div>
+        <div class="about-interests__list">
+          <article>
+            <span>01</span>
+            <div>
+              <h3>Software and the web</h3>
+              <p>Building sites, tools, and services that make an idea useful to someone else.</p>
+            </div>
+          </article>
+          <article>
+            <span>02</span>
+            <div>
+              <h3>Systems and infrastructure</h3>
+              <p>Understanding how the pieces connect, from the application down to the services it relies on.</p>
+            </div>
+          </article>
+          <article>
+            <span>03</span>
+            <div>
+              <h3>Electronics and hardware</h3>
+              <p>Making room for physical builds, circuits, and the occasional experiment beyond the screen.</p>
+            </div>
+          </article>
+          <article>
+            <span>04</span>
+            <div>
+              <h3>Programming experiments</h3>
+              <p>Trying out an idea to see what it can teach me, even when it stays small.</p>
+            </div>
+          </article>
         </div>
       </section>
 
-      <div class="about-page__end">
-        <p class="eyebrow">Take a look around</p>
-        <a class="button button--filled" href="/projects/">Browse the projects <span aria-hidden="true">→</span></a>
-      </div>
+      <section class="about-page__approach" aria-labelledby="about-approach-title">
+        <p class="eyebrow">My approach</p>
+        <div>
+          <h2 id="about-approach-title">I learn by making things concrete.</h2>
+          <p>I like taking an idea far enough to see where it works and where it needs another pass. Some projects become useful tools; others are experiments that help me understand a problem better. This site keeps both in view.</p>
+        </div>
+      </section>
+
+      <section class="about-technologies" aria-labelledby="about-technologies-title">
+        <div class="about-technologies__intro">
+          <p class="eyebrow">Across these projects</p>
+          <h2 id="about-technologies-title">Tools change with the work.</h2>
+          <p>These are technologies used in the projects collected here, rather than a claim to one fixed stack.</p>
+        </div>
+        <dl class="about-technologies__groups">
+          {technologyGroups.map((group) => (
+            <div>
+              <dt>{group.label}</dt>
+              <dd>{group.items.map((item) => <span>{item}</span>)}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section class="about-page__end" aria-label="Continue exploring">
+        <div>
+          <p class="eyebrow">Continue exploring</p>
+          <p>See what I’ve been building, or find more of my work on GitHub.</p>
+        </div>
+        <div class="about-page__links">
+          <a class="button button--filled" href="/projects/">Browse projects <span aria-hidden="true">→</span></a>
+          <a class="button button--outline" href="/contact/">Get in touch <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
     </div>
   </article>
 </SiteLayout>

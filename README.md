@@ -45,25 +45,11 @@ The project archive and individual pages are generated from these Markdown entri
 
 ## GitHub Pages
 
-The workflow in `.github/workflows/deploy.yml` builds the site and publishes `dist/` when changes reach `main`. In the repository, open **Settings → Pages** and select **GitHub Actions** under **Build and deployment → Source**. The workflow does not configure a custom domain in repository settings by itself.
+The workflow in `.github/workflows/deploy.yml` builds the site and publishes `dist/` when changes reach `main`. GitHub Pages uses this GitHub Actions workflow as its publishing source. The configured custom domain is `armsteel.dev`; the workflow publishes the `CNAME` file from `public/` with the site.
 
-For `armsteel.dev`, add `armsteel.dev` under the repository’s **Settings → Pages → Custom domain**. The repository owner or an administrator must do this. The `public/CNAME` file is included in the generated site as a record of the intended domain.
+At Name.com, the apex uses an `ANAME` record pointing to `armsteeldev.github.io`, and `www` uses a `CNAME` to the same host. Existing TXT records for domain verification are kept in place. The GitHub Pages certificate is approved and HTTPS is enforced.
 
-For Name.com DNS, configure the apex (`@`) with these GitHub Pages records:
-
-| Type | Host | Value |
-| --- | --- | --- |
-| A | `@` | `185.199.108.153` |
-| A | `@` | `185.199.109.153` |
-| A | `@` | `185.199.110.153` |
-| A | `@` | `185.199.111.153` |
-| AAAA | `@` | `2606:50c0:8000::153` |
-| AAAA | `@` | `2606:50c0:8001::153` |
-| AAAA | `@` | `2606:50c0:8002::153` |
-| AAAA | `@` | `2606:50c0:8003::153` |
-| CNAME | `www` | `armsteeldev.github.io` |
-
-Set the record TTL to Name.com’s default. GitHub recommends adding the domain in Pages settings before configuring DNS. DNS can take time to propagate; verify the records and HTTPS state in GitHub Pages after configuration. No DNS or publication changes have been made as part of preparing this repository.
+The root `CNAME` records the custom domain in the repository, and `public/CNAME` ensures the same value is present in the static deployment artifact.
 
 ## Structure
 
@@ -73,7 +59,7 @@ Set the record TTL to Name.com’s default. GitHub recommends adding the domain 
 - `src/pages/` — homepage, archive, About, generated project details, sitemap, and 404 page
 - `src/styles/global.css` — design tokens, responsive layout, and component styles
 - `public/branding/armsteel-mark.svg` — reusable standalone Armsteel mark
-- `public/favicon.svg` and `public/og.svg` — browser and social preview artwork
+- `public/favicon.svg`, its PNG fallbacks, and `public/og.svg` — browser and social preview artwork
 - `.github/workflows/deploy.yml` — GitHub Pages build and deployment workflow
 
-The email and YouTube links from the visual reference are not included because no valid destinations were supplied.
+The Contact page uses the existing Armsteel email address and separates the personal GitHub profile from the Armsteel organization.

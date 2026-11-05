@@ -13,9 +13,8 @@ const projects = (await getCollection('projects'))
   <section class="hero" aria-labelledby="hero-title">
     <div class="container hero__inner">
       <div class="hero__copy">
-        <p class="eyebrow hero__eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> Personal portfolio / open archive</p>
-        <h1 id="hero-title"><span>A place for the</span><span>random things I</span><span>make.</span></h1>
-        <p class="hero__intro">Software, electronics, experiments, and whatever else I feel like building.</p>
+        <h1 id="hero-title"><span>Things I’ve</span><span>built.</span></h1>
+        <p class="hero__intro">I’m Charlie Arnerstål, the person behind Armsteel. I build software, explore systems, and experiment with electronics.</p>
         <div class="hero__actions">
           <a class="button button--filled" href="/projects/">Explore projects <span aria-hidden="true">→</span></a>
           <a class="button button--outline" href="/about/">About me <span aria-hidden="true">↗</span></a>
@@ -25,15 +24,13 @@ const projects = (await getCollection('projects'))
         <span class="hero-art__beam"></span>
         <span class="hero-art__fine-line"></span>
         <img class="hero-art__mark" src="/branding/armsteel-mark.svg" alt="" width="1473" height="1080" fetchpriority="high" />
-        <span class="hero-art__caption">Armsteel / geometric mark</span>
       </div>
     </div>
-    <div class="hero__baseline" aria-hidden="true"><span></span><span>01 — 04</span></div>
   </section>
 
   <section class="section work-section" id="projects" aria-labelledby="selected-work">
     <div class="container">
-      <SectionHeading eyebrow="A small selection" title="Selected work" linkHref="/projects/" linkLabel="View all projects" />
+      <SectionHeading eyebrow="Current projects" title="Selected work" linkHref="/projects/" linkLabel="View all projects" />
       <div class="project-grid project-grid--featured">
         {projects.map((project) => <ProjectCard project={project} />)}
       </div>
@@ -51,7 +48,7 @@ const projects = (await getCollection('projects'))
         <h2 id="about-title">About</h2>
       </div>
       <div class="about-band__copy">
-        <p>I’m Charlie Arnerstål — a maker, developer, and generalist engineer who likes building useful things and following a curiosity wherever it leads.</p>
+        <p>I’m Charlie Arnerstål. Armsteel is where I collect software, technical projects, and the occasional electronics experiment.</p>
         <a class="text-link" href="/about/">More about me <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
@@ -59,9 +56,9 @@ const projects = (await getCollection('projects'))
 
   <section class="closing-note" aria-label="About Armsteel">
     <div class="container closing-note__inner">
-      <p class="eyebrow">A note on Armsteel</p>
-      <p class="closing-note__statement">One place for finished tools, half-formed ideas, and everything in between.</p>
-      <a class="button button--outline" href="/projects/">Browse the archive <span aria-hidden="true">→</span></a>
+      <p class="eyebrow">The project archive</p>
+      <p class="closing-note__statement">I keep this archive open as new things take shape.</p>
+      <a class="button button--outline" href="/projects/">See all projects <span aria-hidden="true">→</span></a>
     </div>
   </section>
 </SiteLayout>

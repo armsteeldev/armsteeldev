@@ -1,0 +1,47 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const contactEmail = 'armsteeldev@outlook.com';
+const personalGithub = 'https://github.com/Charlemagne404';
+const armsteelGithub = 'https://github.com/armsteeldev';
+---
+
+<SiteLayout title="Contact — Armsteel" description="Get in touch with Charlie Arnerstål about projects, technical questions, and potential collaborations.">
+  <article class="contact-page">
+    <header class="page-intro contact-page__intro">
+      <div class="container page-intro__inner">
+        <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> Contact Charlie</p>
+        <h1>Get in touch.</h1>
+        <p>Questions about a project, technical work, a possible collaboration, or something else? I’d be glad to hear from you.</p>
+        <span class="page-intro__index" aria-hidden="true">CONTACT / ARMSTEEL</span>
+      </div>
+    </header>
+
+    <div class="container contact-page__content">
+      <section class="contact-page__email" aria-labelledby="contact-email-label">
+        <p class="eyebrow" id="contact-email-label">By email</p>
+        <a href={`mailto:${contactEmail}`}>
+          <span>{contactEmail}</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </section>
+
+      <section class="contact-page__github" aria-labelledby="contact-github-title">
+        <div>
+          <p class="eyebrow">GitHub</p>
+          <h2 id="contact-github-title">Find me and Armsteel</h2>
+        </div>
+        <div class="contact-page__github-links">
+          <div>
+            <p class="eyebrow">Personal profile</p>
+            <a href={personalGithub} target="_blank" rel="noreferrer">Charlemagne404 <span aria-hidden="true">↗</span></a>
+          </div>
+          <div>
+            <p class="eyebrow">Armsteel organization</p>
+            <a href={armsteelGithub} target="_blank" rel="noreferrer">armsteeldev <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+</SiteLayout>
